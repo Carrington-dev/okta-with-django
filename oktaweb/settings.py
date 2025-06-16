@@ -143,10 +143,18 @@ CORS_ALLOWED_ORIGINS = [
 ]
 CORS_ALLOW_CREDENTIALS = True
 # REST Framework settings
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    # 'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    # 'DEFAULT_PAGINATION_CLASS': 'tradings.pagination.VroomPagination',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20
+    
 }
 # Simple JWT settings
 SIMPLE_JWT = {
@@ -169,3 +177,22 @@ DJOSER = {
         'user': 'security.serializers.UserCreateSerializer',
     },
 }
+
+OIDC_RP_CLIENT_ID = '<your-client-id>'
+OIDC_RP_CLIENT_SECRET = '<your-client-secret>'
+OIDC_OP_AUTHORIZATION_ENDPOINT = 'https://<your-okta-domain>/oauth2/default/v1/authorize'
+OIDC_OP_TOKEN_ENDPOINT = 'https://<your-okta-domain>/oauth2/default/v1/token'
+OIDC_OP_USER_ENDPOINT = 'https://<your-okta-domain>/oauth2/default/v1/userinfo'
+OIDC_OP_JWKS_ENDPOINT = 'https://<your-okta-domain>/oauth2/default/v1/keys'
+OIDC_RP_SIGN_ALGO = 'RS256'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_PORT = os.getenv("EMAIL_PORT")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS")
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
+DEFAULT_FROM_ADMIN = os.getenv("DEFAULT_FROM_ADMIN")
